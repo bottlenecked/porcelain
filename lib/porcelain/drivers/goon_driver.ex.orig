@@ -229,6 +229,11 @@ defmodule Porcelain.Driver.Goon do
 
   @doc false
   def check_goon_version(path) do
+<<<<<<< HEAD
+    ackstr = for << <<byte>> <- :crypto.strong_rand_bytes(8) >>,
+                 byte != 0, into: "", do: <<byte>>
+=======
+>>>>>>> 942d997... Not the right way, but fixes the commandline issues on windows
     args = ["-proto", @proto_version, "-ack", ackstr]
     opts = {[out: {:string, ""}], []}
     result = %Porcelain.Result{} = Porcelain.Driver.Basic.exec(path, args, opts)
@@ -239,7 +244,7 @@ defmodule Porcelain.Driver.Goon do
   def ackstr() do
     case :os.type do
       {:win32,_} -> "spikedValue"
-      _ -> for << <<byte>> <- :crypto.strong_rand_bytes(8) >>,
+      _ -> for << <<byte>> <- :crypto.rand_bytes(8) >>,
                    byte != 0, into: "", do: <<byte>>
     end
   end
